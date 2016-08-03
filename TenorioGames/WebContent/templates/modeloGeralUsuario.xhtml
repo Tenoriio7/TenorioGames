@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+<ui:insert name="metadata" />
+<f:metadata>
+	<f:event listener="#{produtoBean.carregarPesquisa}"
+		type="preRenderView"></f:event>
+</f:metadata>
+
+
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<title>TenórioGames</title>
+</h:head>
+
+<h:body>
+	<p:growl id="msgGlobal" />
+	<p:layout fullPage="true">
+
+		<p:layoutUnit position="north" size="100" header="Tenório Games"
+			resizable="false" closable="false" collapsible="false">
+			<h:form id="menuSuperior">
+				<p:tabMenu rendered="true" >
+					<p:menuitem value="Atendimento" outcome="/Pages/Atendimento.xhtml?faces-redirect=true" >
+						<f:param name="i" value="0" />
+					</p:menuitem>
+					<p:menuitem value="Meus pedidos" outcome="/Pages/Usuario/vendasUsuario.xhtml?faces-redirect=true"
+					rendered="#{autenticacaoBean.usuarioLogado.status != null}">
+						<f:param name="i" value="1" />
+					</p:menuitem>
+					<p:menuitem value="Minha conta"
+						rendered="#{autenticacaoBean.usuarioLogado.status != null}">
+					</p:menuitem>
+					
+					
+					<p:menuitem value="Minhas devoluções" outcome="/Pages/Devolucao/devolucoesGerenciar.xhtml?faces-redirect=true"
+					rendered="#{autenticacaoBean.usuarioLogado.status != null}">
+						<f:param name="i" value="1" />
+					</p:menuitem>
+					
+		
+					<p:menuitem value="Redes Sociais">
+						<f:param name="i" value="3" />
+					</p:menuitem>
+					<p:menuitem value="Autenticar" outcome="/Pages/Usuario/autenticacao.xhtml"
+					rendered="#{autenticacaoBean.usuarioLogado.status == null}">
+					</p:menuitem>
+					<p:menuitem value="Cadastrar" outcome="/Pages/Usuario/usuarioFinalFiltro.xhtml?faces-redirect=true"
+					rendered="#{autenticacaoBean.usuarioLogado.status == null}">
+					</p:menuitem>
+					<p:menuitem value="Sair" 
+					rendered="#{autenticacaoBean.usuarioLogado.status != null}"
+					action="#{autenticacaoBean.sair}" >
+					</p:menuitem>
+					<p:menuitem value="Realizar Compra" 
+					rendered="#{autenticacaoBean.usuarioLogado.status != null}"
+					action="/Pages/Vendas/vendaCadastro.xhtml?faces-redirect=true" >
+					</p:menuitem>
+				</p:tabMenu>
+			</h:form>
+		</p:layoutUnit>
+
+		<p:layoutUnit position="south" size="50" resizable="false"
+			closable="false" collapsible="false">
+			<h:outputText
+				value="Informações da empresa  (CNPJ , RAZAO SOCIAL, NOME FANTASIA E ETC)" />
+		</p:layoutUnit>
+
+		<p:layoutUnit position="west" size="200" header="Navegue pela Loja"
+			resizable="false" closable="false" collapsible="false">
+
+				<h:form>
+						<p:panelMenu>
+							<p:submenu label="Playstation 4 ">
+								<p:menuitem value="Console"  />
+								<p:menuitem value="Jogos " />
+								<p:menuitem value="Acessórios " />
+							</p:submenu>
+							
+							<p:submenu label="Playstation 3 ">
+								<p:menuitem value="Console"  />
+								<p:menuitem value="Jogos " />
+								<p:menuitem value="Acessórios " />
+							</p:submenu>
+							
+							
+							<p:submenu label="Xbox One">
+								<p:menuitem value="Console"  />
+								<p:menuitem value="Jogos " />
+								<p:menuitem value="Acessórios " />
+							</p:submenu>
+							
+							<p:submenu label="Xbox360">
+								<p:menuitem value="Console"  />
+								<p:menuitem value="Jogos " />
+								<p:menuitem value="Acessórios " />
+							</p:submenu>
+						</p:panelMenu>
+
+					
+
+					</h:form>
+			
+		</p:layoutUnit>
+
+
+
+		<p:layoutUnit position="center" resizable="false" closable="false"
+			collapsible="false">
+			<ui:insert name="conteudo"></ui:insert>
+<!-- 			<p:toolbar> -->
+<!-- 				<f:facet name="left"> -->
+<!-- 				<h:outputLabel value="Buscar produto: "/> -->
+<!-- 				<h:inputText maxlength="20"/> -->
+<!-- 				<h:button value="ok"/> -->
+<!-- 				<h:selectOneListbox> -->
+<!-- 				<tt/> -->
+<!-- 				<h:outputLabel value="Buscar por gênero "/> -->
+<!-- 				<f:selectItem itemLabel="Aventura" itemValue="1"/> -->
+<!-- 				</h:selectOneListbox> -->
+<!-- 				<tt/> -->
+<!-- 				<h:link value="Clique aqui para realizar login ou sair"></h:link> -->
+				
+				
+<!-- 				</f:facet> -->
+<!-- 			</p:toolbar> -->
+
+
+
+
+<!-- 			<h:form id="form"> -->
+			
+			
+<!-- 				<p:carousel value="#{produtoBean.listaProdutos}"  -->
+<!-- 					var="produto" itemStyle="text-align:center" responsive="true" -->
+<!-- 					> -->
+<!-- 					<p:panelGrid columns="2" style="width:100%;margin:10px 0px" -->
+<!-- 						columnClasses="label,value" layout="grid" -->
+<!-- 						styleClass="ui-panelgrid-blank"> -->
+
+
+<!-- 						<h:outputText value="Descrição:" /> -->
+<!-- 						<h:outputText value="#{produto.descricao}" /> -->
+
+<!-- 						<h:outputText value="Preço" /> -->
+<!-- 						<h:outputText value="#{produto.preco}" /> -->
+<!-- 						<h:commandButton value="Comprar">					 -->
+<!-- 						</h:commandButton> -->
+<!-- 					</p:panelGrid> -->
+
+<!-- 				</p:carousel> -->
+				
+			
+				
+
+<!-- 			</h:form> -->
+
+
+		</p:layoutUnit>
+
+	</p:layout>
+</h:body>
+</html>

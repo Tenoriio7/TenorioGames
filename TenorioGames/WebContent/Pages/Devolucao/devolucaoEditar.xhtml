@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+ <ui:composition template="/templates/modeloGeral.xhtml">
+	<ui:define name="metadate">
+		<f:metadata>
+			<f:event listener="#{devolucaoBean.carregarCadastro}"
+				type="preRenderView" />
+			<f:viewParam name="devCod" value="#{devolucaoBean.codigo}"></f:viewParam>
+			<f:viewParam name="devAcao" value="#{devolucaoBean.acao}"></f:viewParam>
+			<f:viewParam name="devVal" value="#{devolucaoBean.valor}"></f:viewParam>
+		</f:metadata>
+	</ui:define>
+	<ui:define name="conteudo">
+		<!-- para inserir toolbar deve se ter o facet -->
+		<p:toolbar>
+				<f:facet name="left">
+				<h:outputText value="Devolucao"></h:outputText>
+				</f:facet>
+		</p:toolbar>
+		<h:form>
+			<h:panelGrid columns="2">
+			
+			<h:outputLabel value="Código:"></h:outputLabel>
+			<h:outputText maxlength="20" size="10" readonly="true" value="#{devolucaoBean.devolucao.codigo}"/>
+			
+				<p:outputLabel value="Selecione o Status da Devolução"/><br></br><br></br>
+			<h:selectOneMenu  value="#{devolucaoBean.devolucao.status}">
+			<f:selectItem itemValue="Novo" itemLabel="Novo"></f:selectItem>			
+			<f:selectItem itemValue="Finalizada" itemLabel="Finalizada"></f:selectItem>
+			</h:selectOneMenu>
+			</h:panelGrid>
+			<br></br><br></br>
+			<div align="left">
+			<p:commandButton value="Alterar Status"
+			actionListener="#{devolucaoBean.editarDevolucao}" update=":msgGlobal">
+			 <f:param name="acao" value="Editar"></f:param>
+			</p:commandButton></div>
+		</h:form>
+	</ui:define>
+ </ui:composition>
+ 
+</html>

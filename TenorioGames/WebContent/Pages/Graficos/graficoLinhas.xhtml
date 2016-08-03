@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	template="/templates/modeloGeral.xhtml">
+	<ui:define name="conteudo">
+		<h:form id="form">
+			<h:panelGrid id="pnlMensagem">
+				<p:growl id="msgGrafico" />
+			</h:panelGrid>
+			<br />
+			<br />
+
+			<h:panelGrid columns="2" id="pgTipoDado">
+
+				<h:outputLabel value="Selecione o gênero de grafico:"></h:outputLabel>
+				<p:selectOneMenu value="#{gerarGraficoLinhaAnual.tipoDados}">
+					<f:selectItem itemLabel="Selecione" noSelectionOption="true"></f:selectItem>
+					<f:selectItem itemLabel="Console" itemValue="Console" />
+					<f:selectItem itemLabel="Jogos" itemValue="Jogos" />
+				</p:selectOneMenu>
+			</h:panelGrid>
+			
+			
+			<h:panelGrid columns="2" id="pgAno">
+
+				<h:outputLabel value="Selecione o Ano:"></h:outputLabel>
+				<p:selectOneMenu value="#{gerarGraficoLinhaAnual.ano}">
+					<f:selectItem itemLabel="2016" itemValue="2016" />
+				</p:selectOneMenu>
+			</h:panelGrid>
+			
+			
+
+			<h:panelGrid id="pnlBotoes" columns="2">
+
+				<p:commandButton value="Gerar"
+					actionListener="#{gerarGraficoLinhaAnual.gerarGraficoPersonalizado}"
+					action="#{gerarGraficoLinhaAnual.exibirGraficoPersonalizado}"
+					update="pgTipoDado pgGrafico" />
+
+				<p:commandButton value="Limpar"
+					actionListener="#{gerarGraficoLinhaAnual.limparGrafico}"
+					update="pgTipoDado pgGrafico" />
+
+			</h:panelGrid>
+			<br />
+			<br />
+			<h:panelGrid id="pgGrafico">
+
+				<p:chart type="line" model="#{gerarGraficoLinhaAnual.lineModel}"
+					style="width:960px;height:700px"
+					rendered="#{gerarGraficoLinhaAnual.lineModel != null}" />
+
+			</h:panelGrid>
+			<br />
+			<br />
+
+		</h:form>
+
+	</ui:define>
+</ui:composition>
+

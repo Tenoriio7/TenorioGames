@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+ <ui:composition template="/templates/modeloGeralUsuario2.xhtml">
+	<ui:define name="metadate">
+		<f:metadata>
+			<f:event listener="#{produtoBean.carregarPesquisa}" type="preRenderView"></f:event>
+		</f:metadata>
+	</ui:define>
+ 	
+	<ui:define name="conteudo">
+	
+		<h:form>
+		<p:toolbar>
+				<f:facet name="left">
+				<h:outputText value="Produto Detalhes"></h:outputText>
+				<h:inputText></h:inputText>
+				</f:facet>
+		</p:toolbar>
+			<h:panelGrid columns="2">
+			
+			
+			<h:graphicImage url="http://isuba1-a.akamaihd.net/produtos/01/00/item/124319/8/124319849_1GG.jpg"></h:graphicImage>
+			<h:panelGrid >
+			<div >
+			<h1>Game FIFA 16 - Xbox 360 </h1>
+			<h1 >R$ 189,00</h1>
+			
+			<div align="left">
+			<h:outputLabel value="Descrição:"/>
+			</div>
+			<p:inputTextarea
+						value="Game FIFA 16 - Xbox 360
+						O FIFA 16 inova em todo o campo para oferecer uma experiência de futebol equilibrada, autêntica e empolgante que possibilita a você jogar do seu jeito e competir em um nível maior. Você vai ter confiança na defesa, vai assumir o controle no meio de campo e criar mais momentos mágicos do que nunca. FIFA 16. "
+						rows="7" cols="135">
+			</p:inputTextarea>
+			
+			<p:commandButton  value="Comprar"/>
+			</div>
+			
+			</h:panelGrid>
+			
+		</h:panelGrid>
+		</h:form>
+	</ui:define>
+ </ui:composition>
+ 
+</html>

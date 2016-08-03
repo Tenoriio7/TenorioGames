@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+<ui:composition template="/templates/modeloGeralUsuario.xhtml">
+	<ui:define name="metadate">
+		<f:metadata>
+
+
+		</f:metadata>
+
+
+	</ui:define>
+	<ui:define name="conteudo">
+
+		<h:form id="frmVendaCad">
+			<!-- columns="4"  dois por linha no painelGrid -->
+			<p:toolbar>
+				<f:facet name="left">
+					<h:outputText value="Produtos Disponiveis"></h:outputText>
+				</f:facet>
+			</p:toolbar>
+			<p:dataTable emptyMessage="Nenhum Registro Encontrado."
+				value="#{vendaBean.listaProdutos}"
+				filteredValue="#{vendaBean.listaProdutosFiltrados}" var="produto"
+				paginator="true" rows="4" id="tblProdutos">
+
+				<!-- filterBy="" filtrar  sortBy="" ordenar -->
+				<p:column headerText="Codigo">
+					<h:outputText value="#{produto.codigo}"
+						rendered="#{produto.quantidade > 1}" />
+				</p:column>
+				<p:column headerText="Descricao" filterBy="#{produto.descricao}"
+					sortBy="#{produto.descricao}">
+					<h:outputText value="#{produto.descricao}"
+						rendered="#{produto.quantidade > 1}" />
+				</p:column>
+				<p:column headerText="Preço" sortBy="#{produto.preco}">
+					<h:outputText value="#{produto.preco}"
+						rendered="#{produto.quantidade > 1}" />
+				</p:column>
+
+				<p:column headerText="Quantidade" filterBy="#{produto.quantidade}"
+					sortBy="#{produto.quantidade}" id="prodQtde">
+					<h:outputText value="#{produto.quantidade}"
+						rendered="#{produto.quantidade > 1}" />
+				</p:column>
+				
+						
+				
+				
+
+				<p:column headerText="Opções" style="width: 10%">
+					<p:commandButton value="Adicionar"
+						id="btAdicionar"	
+						actionListener="#{vendaBean.adicionar(produto)}"
+						update=":frmVendaCad:tblItens :frmVendaCad:txtVendaValorTotal :frmVendaCad:tblProdutos :frmFinalizar"
+						rendered="#{produto.quantidade > 1}"
+						disabled="#{produto.status != 'Ativo'}" />
+
+
+
+				</p:column>
+
+			</p:dataTable>
+			<p:separator />
+			<p:toolbar>
+				<f:facet name="left">
+					<h:outputText value="Carrinho de compra"></h:outputText>
+				</f:facet>
+			</p:toolbar>
+			<p:dataTable emptyMessage="Nenhum Registro Encontrado."
+				value="#{vendaBean.listaItens}" var="item" paginator="true" rows="4"
+				id="tblItens">
+
+				<!-- filterBy="" filtrar  sortBy="" ordenar -->
+				<p:column headerText="Produto">
+					<h:outputText value="#{item.produto.descricao}"></h:outputText>
+				</p:column>
+				<p:column headerText="Quantidade">
+					<h:outputText value="#{item.quantidade}" id="prodQtdeR" />
+				</p:column>
+				<p:column headerText="Valor Parcial">
+					<h:outputText value="#{item.valor}"></h:outputText>
+				</p:column>
+
+				<p:column headerText="Opções" style="width: 10%">
+					<p:commandButton value="Remover"
+						actionListener="#{vendaBean.remover(item)}"
+						update=" :frmVendaCad:txtVendaValorTotal :frmVendaCad:tblProdutos :frmVendaCad:tblItens :frmFinalizar" />
+
+				</p:column>
+
+			</p:dataTable>
+			<p:separator />
+			<p:toolbar>
+				<f:facet name="left">
+					<h:outputText value="Vale Desconto"></h:outputText>
+				</f:facet>
+			</p:toolbar>
+
+			<p:dataTable value="#{vendaBean.listaValeDesconto}" var="vale"
+				id="dtVale">
+				<p:column headerText="Valor">
+					<h:outputText value="#{vale.valor}"
+						rendered="#{vale.usuario.codigo == autenticacaoBean.usuarioLogado.codigo}" />
+				</p:column>
+				<p:column headerText="Ação">
+					<p:commandButton value="Adicionar"
+						actionListener="#{vendaBean.utilizarValeDesconto(vale)}"
+						update=":frmVendaCad:txtVendaValorTotal  :frmVendaCad:dtVale :msgGlobal"
+						rendered="#{vale.usuario.codigo == autenticacaoBean.usuarioLogado.codigo}" />
+				</p:column>
+			</p:dataTable>
+			<!-- oncomplete espera carregar tudo -->
+			<div align="right">
+				<h:outputText id="txtVendaValorTotal"
+					value="Valor Total: #{vendaBean.vendaCadastro.valor} "
+					style="font-size:34px; font-weight:bold; color:red" />
+			</div>
+		</h:form>
+
+		<h:form id="frmFinalizar">
+			<div align="right">
+				<p:commandButton value="Finalizar Venda" id="btFinalizar"
+					oncomplete="PF('wvDlgFinVenda').show();"
+					actionListener="#{vendaBean.carregarDadosVenda}"
+					action="#{vendaBean.inserirvalorfrete}" update=":frmPdl"
+					rendered="#{vendaBean.vendaCadastro.valor >=  1}" 
+					disabled="#{vendaBean.autenticacaoBean.usuarioLogado.status != 'ativo'}"/>
+					
+			</div>
+		</h:form>
+
+		<p:dialog closable="true" modal="true" draggable="true"
+			resizable="false" header="Dados da Venda" widgetVar="wvDlgFinVenda"
+			appendTo="@(body)" id="pdlVenda">
+			<h:form id="frmPdl">
+				<h:panelGrid columns="2">
+					<h:outputText value="Horario:" />
+					<h:outputText value="#{vendaBean.vendaCadastro.horario}">
+						<f:convertDateTime pattern="dd/MM/yyyy HH:mm"
+							timeZone="America/Sao_Paulo" />
+					</h:outputText>
+
+					<h:outputText value="Usuario: " />
+					<h:outputText value="#{vendaBean.vendaCadastro.usuario.nome}" />
+					<h:outputText value="Valor Frete" />
+					<h:outputText value="#{vendaBean.valorFrete}" />
+					<h:outputText value="Valor Total:" />
+					<h:outputText value="#{vendaBean.vendaCadastro.valor}" />
+
+				</h:panelGrid>
+				<h:panelGrid columns="2">
+
+					<p:commandButton value="Salvar"
+						id="btSalvar"
+						actionListener="#{vendaBean.salvar}"
+						update=":msgGlobal :frmVendaCad:tblItens :frmVendaCad:txtVendaValorTotal"
+						oncomplete="PF('wvDlgFinVenda').hide();" ajax="true" />
+
+					<p:commandButton value="Voltar"
+						actionListener="#{vendaBean.limparDados}"
+						onclick="PF('wvDlgFinVenda').hide();"
+						update=" :frmVendaCad:txtVendaValorTotal :frmVendaCad:tblProdutos :frmVendaCad:tblItens :frmFinalizar" />
+				</h:panelGrid>
+			</h:form>
+		</p:dialog>
+
+	</ui:define>
+</ui:composition>
+</html>

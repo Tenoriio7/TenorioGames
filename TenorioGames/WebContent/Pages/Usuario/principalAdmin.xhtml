@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+<ui:insert name="metadata" />
+
+<f:metadata>
+			
+			<f:event listener="#{principalBean.verificarDisponibilidade}" type="preRenderView"></f:event>
+			
+		</f:metadata>
+
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<title>TenorioGames</title>
+</h:head>
+
+<h:body>
+	<p:growl id="msgGlobal" />
+	<p:layout fullPage="true">
+
+		<p:layoutUnit position="north" size="100" header="TenorioGames"
+			resizable="false" closable="false" collapsible="false">
+
+			<h:form id="frmMenuSuperior">
+				<p:tabMenu rendered="true" activeIndex="-1">
+					<p:menuitem value="Sair"
+						rendered="#{autenticacaoBean.usuarioLogado.status != null}"
+						action="#{autenticacaoBean.sair}">
+					</p:menuitem>
+					<p:menuitem value="Graficos"
+						rendered="#{autenticacaoBean.usuarioLogado.status == 'admin'}"
+						action="/Pages/Graficos/graficoLinhas.xhtml?faces-redirect=true" />
+					<p:menuitem value="Minha conta"
+						rendered="#{autenticacaoBean.usuarioLogado.status != null}">
+
+					</p:menuitem>
+					<p:menuitem value="Autenticar"
+						rendered="#{autenticacaoBean.usuarioLogado.status == null}"
+						action="/Pages/Usuario/autenticacao.xhtml?faces-redirect=true">
+
+					</p:menuitem>
+
+
+
+				</p:tabMenu>
+
+			</h:form>
+
+		</p:layoutUnit>
+
+		<p:layoutUnit position="west" size="250" header="Menu administrativo"
+			resizable="false" closable="false" collapsible="false"
+			rendered="#{autenticacaoBean.usuarioLogado.status=='admin'}">
+			<h:form id="frmMenuPrincipal">
+				<p:panelMenu id="pnlMenuPrincipal">
+					<p:submenu label="Cadastros" id="lbl">
+						<p:menuitem value="Fornecedor"
+							outcome="/Pages/Fornecedor/fornecedorPesquisa.xhtml" />
+						<p:menuitem value="Produtos"
+							outcome="/Pages/Produto/produtoPesquisa.xhtml" />
+						<p:menuitem value="Usuários"
+							outcome="/Pages/Usuario/usuarioPesquisa.xhtml" />
+						<p:menuitem value="Genero"
+							outcome="/Pages/Genero/generoPesquisa.xhtml" />
+					</p:submenu>
+					<p:submenu label="Estoque"
+						rendered="#{autenticacaoBean.usuarioLogado.status=='admin'}">
+						<p:menuitem value="Fisico/Virtual" />
+					</p:submenu>
+					<p:submenu label="Vendas"
+						rendered="#{autenticacaoBean.usuarioLogado.status=='admin'}">
+						<p:menuitem value="Visualizar Todas"
+							outcome="/Pages/Vendas/vendasAbertas.xhtml?faces-redirect=true" />
+
+					</p:submenu>
+					
+					<p:submenu label="Devolucoes"
+						rendered="#{autenticacaoBean.usuarioLogado.status=='admin'}">
+						<p:menuitem value="Visualizar Todas"
+							outcome="/Pages/Devolucao/devolucoesGerenciar.xhtml?faces-redirect=true" />
+
+					</p:submenu>
+					
+
+				</p:panelMenu>
+			</h:form>
+		</p:layoutUnit>
+
+		<!--     <p:layoutUnit position="east" size="200" header="direita" resizable="false" closable="false" collapsible="false" effect="drop"> -->
+		<!--         <h:outputText value="Right unit content." /> -->
+		<!--     </p:layoutUnit> -->
+
+		<p:layoutUnit position="center" resizable="false" closable="false"
+			collapsible="false">
+			<ui:insert name="conteudo"></ui:insert>
+
+		</p:layoutUnit>
+
+	</p:layout>
+</h:body>
+</html>

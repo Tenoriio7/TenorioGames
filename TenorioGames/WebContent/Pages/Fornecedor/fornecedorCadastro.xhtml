@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+ <ui:composition template="/templates/modeloGeral.xhtml">
+ 		<ui:define name="metadate">
+		<f:metadata>
+			<f:event listener="#{fornecedorBean.carregarCadastro}" type="preRenderView"/>
+			<f:viewParam name="fornAcao" value="#{fornecedorBean.acao}"></f:viewParam>
+			<f:viewParam name="fornCod" value="#{fornecedorBean.codigo}"></f:viewParam>		
+		</f:metadata>
+	</ui:define> 
+	<ui:define name="conteudo">
+		<!-- para inserir toolbar deve se ter o facet -->
+		<p:toolbar>
+				<f:facet name="left">
+				<h:outputText value="Fornecedor"></h:outputText>
+				</f:facet>
+		</p:toolbar>
+		<h:form id="frmFabCad">
+			<!--  o value é utilizado para informar qual managedbean é amarrado ao projeto
+			<h:inputText maxlength="50" size="30" value="#{fornecedorBean.fornecedorCadastro.codigo}"/> -->
+			
+			<h:panelGrid columns="2" id="pnlFabCadDados">
+			<h:outputLabel value="Código:"></h:outputLabel>
+			<h:inputText maxlength="20" size="10" readonly="true" value="#{fornecedorBean.fornecedorCadastro.codigo}"
+			disabled="#{fornecedorBean.acao == 'Excluir'}" />
+			
+			<h:outputLabel value="Nome Fantasia"></h:outputLabel>
+			<h:inputText maxlength="50" size="30" value="#{fornecedorBean.fornecedorCadastro.nomeFantasia}"
+			disabled="#{fornecedorBean.acao == 'Excluir'}"/>
+			
+			<h:outputLabel value="Razão Social"></h:outputLabel>
+			<h:inputText maxlength="50" size="30" value="#{fornecedorBean.fornecedorCadastro.razaoSocial}"
+			disabled="#{fornecedorBean.acao == 'Excluir'}"/>
+			
+				<h:outputLabel value="CNPJ : "/>
+			<p:inputMask mask="99.999.999/9999-99" value="#{fornecedorBean.fornecedorCadastro.CNPJ}"
+			disabled="#{fornecedorBean.acao == 'Excluir'}">
+	
+			</p:inputMask>
+			<h:outputLabel value="Telefone:"></h:outputLabel>
+			
+			<p:inputMask mask="(99)9999-9999" value="#{fornecedorBean.fornecedorCadastro.telefone}" 
+			disabled="#{fornecedorBean.acao == 'Excluir'}"/>
+			
+			<h:outputLabel value="Rua"></h:outputLabel>
+			<h:inputText maxlength="50" size="30" value="#{fornecedorBean.fornecedorCadastro.endereco.rua}"
+			disabled="#{fornecedorBean.acao == 'Excluir'}"/>		
+			
+			<h:outputLabel value="Numero"></h:outputLabel>
+			<h:inputText maxlength="6" size="6" value="#{fornecedorBean.fornecedorCadastro.endereco.numero}"
+			disabled="#{fornecedorBean.acao == 'Excluir'}"/>
+			
+			<h:outputLabel value="Bairro"></h:outputLabel>
+			<h:inputText maxlength="50" size="30" value="#{fornecedorBean.fornecedorCadastro.endereco.bairro}"
+			disabled="#{fornecedorBean.acao == 'Excluir'}"/>
+			
+			
+			
+			<h:outputLabel value="Cidade"></h:outputLabel>
+			<h:inputText maxlength="50" size="30" value="#{fornecedorBean.fornecedorCadastro.endereco.cidade}"
+			disabled="#{fornecedorBean.acao == 'Excluir'}"/>
+			
+			<h:outputLabel value="CEP"></h:outputLabel>
+			<p:inputMask mask="99999-999" maxlength="9" size="9" value="#{fornecedorBean.fornecedorCadastro.endereco.CEP}"
+			disabled="#{fornecedorBean.acao == 'Excluir'}"/>
+			<h:outputLabel value="Estado"/>
+			<h:selectOneMenu disabled="#{fornecedorBean.acao == 'Excluir'}" value="#{fornecedorBean.fornecedorCadastro.endereco.estado}">
+				<f:selectItem itemLabel="Acre" itemValue="Acre"/>
+				<f:selectItem itemLabel="Alagoas " itemValue="Alagoas "/>
+				<f:selectItem itemLabel="Amapá" itemValue="Amapá"/>
+				<f:selectItem itemLabel="Amazonas" itemValue="Amazonas"/>
+				<f:selectItem itemLabel="Bahia" itemValue="Bahia"/>
+				<f:selectItem itemLabel="Ceará" itemValue="Ceará"/>
+				<f:selectItem itemLabel="Distrito Federal" itemValue="Distrito Federal"/>
+				<f:selectItem itemLabel="Espírito Santo" itemValue="Espírito Santo"/>
+				<f:selectItem itemLabel="Goiás" itemValue="Goiás"/>
+				<f:selectItem itemLabel="Maranhão" itemValue="Maranhão"/>
+				<f:selectItem itemLabel="Mato Grosso" itemValue="Mato Grosso"/>
+				<f:selectItem itemLabel="Mato Grosso do Sul" itemValue="Mato Grosso do Sul"/>
+				<f:selectItem itemLabel="Minas Gerais " itemValue="Minas Gerais "/>
+				<f:selectItem itemLabel="Pará" itemValue="Pará"/>
+				<f:selectItem itemLabel="Paraíba" itemValue="Paraíba"/>
+				<f:selectItem itemLabel="Paraná" itemValue="Paraná"/>
+				<f:selectItem itemLabel="Pernambuco" itemValue="Pernambuco"/>
+				<f:selectItem itemLabel="Piauí" itemValue="Piauí"/>
+				<f:selectItem itemLabel="Rio de Janeiro" itemValue="Rio de Janeiro"/>
+				<f:selectItem itemLabel="Rio Grande do Norte " itemValue="Rio Grande do Norte "/>
+				<f:selectItem itemLabel="Rio Grande do Sul " itemValue="Rio Grande do Sul "/>
+				<f:selectItem itemLabel="Rondônia" itemValue="Rondônia"/>
+				<f:selectItem itemLabel="Roraima" itemValue="Roraima"/>
+				<f:selectItem itemLabel="Santa Catarina " itemValue="Santa Catarina "/>
+				<f:selectItem itemLabel="São Paulo" itemValue="São Paulo"/>
+				<f:selectItem itemLabel="Sergipe" itemValue="Sergipe"/>
+				<f:selectItem itemLabel="Tocantins" itemValue="Tocantins"/>		
+			</h:selectOneMenu>
+			</h:panelGrid>
+			
+						
+			<h:panelGrid columns="6">
+			<p:commandButton value="Novo" actionListener="#{fornecedorBean.novo}" update=":frmFabCad:pnlFabCadDados"
+			rendered="#{fornecedorBean.acao=='Salvar'}" action="Pages/Fornecedor/fornecedorCadastro.xhtml"/> 
+			<!-- propriedade update serve para informar quem será atualizadovia ajax (id  do growl :msgglobal em template-->
+			<p:commandButton value="Salvar" actionListener="#{fornecedorBean.salvar}" update=":msgGlobal :frmFabCad:pnlFabCadDados"
+			rendered="#{fornecedorBean.acao=='Salvar'}"/> 
+			<p:commandButton value="Excluir" actionListener="#{fornecedorBean.excluir}" update=":msgGlobal"
+			rendered="#{fornecedorBean.acao=='Excluir'}"/> 
+			
+			<p:commandButton value="Editar" actionListener="#{fornecedorBean.editar}" update=":msgGlobal"
+			rendered="#{fornecedorBean.acao=='Editar'}"/> 
+			
+			<p:commandButton value="Voltar" action="/Pages/Fornecedor/fornecedorPesquisa.xhtml?faces-redirect=true"/>
+			</h:panelGrid>
+		</h:form>
+	</ui:define>
+ </ui:composition>
+ 
+</html>

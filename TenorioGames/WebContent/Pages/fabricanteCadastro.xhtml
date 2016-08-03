@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+ <ui:composition template="/templates/modeloGeral.xhtml">
+ 		<ui:define name="metadate">
+		<f:metadata>
+			<f:event listener="#{fabricanteBean.carregarCadastro}" type="preRenderView"/>
+			<f:viewParam name="fabacao" value="#{fabricanteBean.acao}"></f:viewParam>
+			<f:viewParam name="fabCod" value="#{fabricanteBean.codigo}"></f:viewParam>
+		</f:metadata>
+	</ui:define> 
+	<ui:define name="conteudo">
+		<!-- para inserir toolbar deve se ter o facet -->
+		<p:toolbar>
+				<f:facet name="left">
+				<h:outputText value="Fabricantes"></h:outputText>
+				</f:facet>
+		</p:toolbar>
+		<h:form id="frmFabCad">
+			<!--  o value é utilizado para informar qual managedbean é amarrado ao projeto
+			<h:inputText maxlength="50" size="30" value="#{fabricanteBean.fabricanteCadastro.descricao}"/> -->
+			
+			<h:panelGrid columns="2" id="pnlFabCadDados">
+			<h:outputLabel value="Código:"></h:outputLabel>
+			<h:inputText maxlength="20" size="10" readonly="true" value="#{fabricanteBean.fabricanteCadastro.codigo}"/>
+			<h:outputLabel value="Descrição:"></h:outputLabel>
+			<h:inputText maxlength="50" size="30" value="#{fabricanteBean.fabricanteCadastro.descricao}"
+			readonly="#{fabricanteBean.acao== 'Excluir'}">
+			<f:validateBean />
+			</h:inputText>
+			</h:panelGrid>
+			
+			<h:panelGrid columns="6">
+			<p:commandButton value="Novo" actionListener="#{fabricanteBean.novo}" update=":frmFabCad:pnlFabCadDados" 
+				rendered="#{fabricanteBean.acao=='Novo'}"/> 
+			<!-- propriedade update serve para informar quem será atualizadovia ajax (id  do growl :msgglobal em template-->
+			<p:commandButton value="Salvar" actionListener="#{fabricanteBean.salvar}" update=":msgGlobal :frmFabCad:pnlFabCadDados"
+				rendered="#{fabricanteBean.acao=='Novo'}"/>
+			<p:commandButton value="Excluir" actionListener="#{fabricanteBean.excluir}" update=":msgGlobal"
+				rendered="#{fabricanteBean.acao=='Excluir'}"/>
+			<p:commandButton value="Editar" actionListener="#{fabricanteBean.editar}" update=":msgGlobal"
+				rendered="#{fabricanteBean.acao=='Editar'}"/>
+			<p:commandButton value="Voltar" action="/Pages/fabricantePesquisa.xhtml?faces-redirect=true"></p:commandButton>
+			</h:panelGrid>
+		</h:form>
+	</ui:define>
+ </ui:composition>
+ 
+</html>

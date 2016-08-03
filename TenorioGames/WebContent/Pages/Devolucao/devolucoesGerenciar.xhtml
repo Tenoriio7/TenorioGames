@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+ <ui:composition template="/templates/modeloGeral.xhtml">
+	<ui:define name="metadate">
+		<f:metadata>
+			<f:event listener="#{devolucaoBean.carregarListaDevolucao}" type="preRenderView"></f:event>
+		</f:metadata>
+	</ui:define>
+ 	
+	<ui:define name="conteudo">
+		<h:form>
+			<!-- columns="4"  dois por linha no painelGrid -->
+			<p:toolbar>
+				<f:facet name="left">
+				<h:outputText value="Devoluções"></h:outputText>
+				</f:facet>
+			</p:toolbar>
+
+			
+			<!--  value  todos / filter  somente  filtrados  //
+			 var aponta o fabricante  corrente(cursor) 
+			 footer rodapé-->
+
+
+			<p:dataTable emptyMessage="Nenhum Registro Encontrado."
+				value="#{devolucaoBean.listaDevolucoes}"
+				var="devolucao" paginator="true">
+
+				<!-- filterBy="" filtrar  sortBy="" ordenar -->
+				<p:column headerText="Codigo" filterBy="#{devolucao.codigo}" sortBy="#{devolucao.codigo}">
+					<h:outputText  value="#{devolucao.codigo}"></h:outputText>
+				</p:column>
+
+				<p:column headerText="Status" filterBy="#{devolucao.status}"
+					sortBy="#{devolucao.status}">
+					<h:outputText value="#{devolucao.status}"></h:outputText>
+				</p:column>
+				
+				<p:column headerText="Valor" filterBy="#{devolucao.valor}"
+					sortBy="#{devolucao.valor}">
+					<h:outputText value="#{devolucao.valor}"></h:outputText>
+				</p:column>				
+			
+
+				<p:column headerText="Opções">
+
+					<p:button value="Editar"
+						outcome="/Pages/Devolucao/devolucaoEditar.xhtml?faces-redirect=true"
+						rendered="#{autenticacaoBean.usuarioLogado.status == 'admin'}">
+						<f:param name="devCod" value="#{devolucao.codigo}"/>
+						<f:param name="devAcao" value="Editar"/>
+						<f:param name="devVal" value="#{devolucao.valor}"/>
+					</p:button>
+					<p:button value="Visualizar"
+						outcome="/Pages/Devolucao/devolucaoVisualizar.xhtml?faces-redirect=true"
+						rendered="#{autenticacaoBean.usuarioLogado.status == 'ativo'}">
+						<f:param name="devCod" value="#{devolucao.codigo}"/>
+						<f:param name="VenCod" value="#{devolucao.venda.codigo}"/>
+						<f:param name="devAcao" value="Editar"/>
+						<f:param name="IteValor" value="#{devolucao.valor}"/>
+						<f:param name="devSta" value="#{devolucao.status}"/>
+						<f:param name="ProdCod" value="#{devolucao.produto.codigo}" />
+					</p:button>
+				
+
+				</p:column>
+
+			</p:dataTable>
+		</h:form>
+	</ui:define>
+ </ui:composition>
+ 
+</html>

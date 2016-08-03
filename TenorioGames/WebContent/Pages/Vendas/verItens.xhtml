@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+<ui:composition template="/templates/modeloGeral.xhtml">
+<ui:define name="metadate">
+		<f:metadata>
+			<f:viewParam name="venCod" value="#{gestaoVendaBean.codigo}"></f:viewParam>
+			
+			<f:event listener="#{gestaoVendaBean.carregarItens}" type="preRenderView"></f:event>
+			
+		</f:metadata>
+	</ui:define>
+
+	<ui:define name="conteudo">
+		<p:toolbar>
+			<f:facet name="left">
+				<h:outputLabel value="Itens da Venda"/>
+			</f:facet>
+		</p:toolbar><br/>
+		
+
+		<p:dataTable emptyMessage="Nenhum Registro Encontrado."
+				value="#{gestaoVendaBean.listaitens}}"
+				filteredValue="#{gestaoVendaBean.listaitens}"
+				var="item" paginator="false">
+				<p:column headerText="Descrição"
+				>
+				<h:outputText value="#{item.prdDescricao}"
+				/>
+				</p:column>
+				<p:column headerText="Quantidade"
+				>
+					<h:outputText value="#{item.quantidade}"
+				/>
+				</p:column>
+					<p:column headerText="Valor"
+					>
+					<h:outputText value="#{item.valor}"
+					/>
+				</p:column>
+				<p:column headerText="Ação">
+				<div align="center">
+				<p:button value="Devolver"
+				outcome="/Pages/Devolucao/devolucaoCadastro.xhtml?faces-redirect=true"
+				rendered="#{autenticacaoBean.usuarioLogado.status == 'ativo'}">
+				<f:param value="#{item.codigo}" name="ItemCod"></f:param>
+				<f:param value="#{item.venda.codigo}" name="VenCod"></f:param>
+				<f:param value="#{item.produto.codigo}" name="ProdCod"></f:param>
+				<f:param value="#{item.valor}" name="IteValor"></f:param>
+				<f:param value="Salvar" name="Acao"></f:param>
+				</p:button>
+				</div>
+				</p:column>
+
+			</p:dataTable>
+	
+
+	</ui:define>
+</ui:composition>
+
+</html>

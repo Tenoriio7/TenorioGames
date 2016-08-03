@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.oRG/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+ <ui:composition template="/templates/modeloGeral.xhtml">
+	<ui:define name="metadate">
+		<f:metadata>
+			<f:event listener="#{usuarioBean.carregarPesquisa}" type="preRenderView"></f:event>
+		</f:metadata>
+	</ui:define>
+ 	
+	<ui:define name="conteudo">
+		<h:form>
+			<!-- columns="4"  dois por linha no painelGrid -->
+			<p:toolbar>
+				<f:facet name="left">
+				<h:outputText value="Usuario"></h:outputText>
+				</f:facet>
+			</p:toolbar>
+
+			
+			<!--  value  todos / filter  somente  filtrados  //
+			 var aponta o fabricante  corrente(cursor) 
+			 footer rodapé-->
+
+
+			<p:dataTable emptyMessage="Nenhum Registro Encontrado."
+				value="#{usuarioBean.listaUsuarios}"
+				filteredValue="#{usuarioBean.listaUsuariosFiltrados}"
+				var="usuario" paginator="true">
+				<f:facet name="footer">
+					<p:button value="Novo"
+						outcome="/Pages/Usuario/usuarioCadastro.xhtml?faces-redirect=true">
+						<f:param name="usrAcao" value="Salvar"/>
+					</p:button>
+				</f:facet>
+
+				<!-- filterBy="" filtrar  sortBy="" ordenar -->
+				<p:column headerText="CPF" filterBy="#{usuario.CPF}" sortBy="#{usuario.CPF}">
+					<h:outputText  value="#{usuario.CPF}"></h:outputText>
+				</p:column>
+				<p:column headerText="Nome" filterBy="#{usuario.nome}"
+					sortBy="#{usuario.nome}">
+					<h:outputText value="#{usuario.nome}"></h:outputText>
+				</p:column>
+				<p:column headerText="RG" filterBy="#{usuario.RG}"
+					sortBy="#{usuario.RG}">
+					<h:outputText value="#{usuario.RG}"></h:outputText>
+				</p:column>
+				
+				<p:column headerText="Telefone" filterBy="#{usuario.telefone}"
+					sortBy="#{usuario.telefone}">
+					<h:outputText value="#{usuario.telefone}"></h:outputText>
+				</p:column>
+
+				<p:column headerText="Opções">
+					<p:button value="Excluir"
+						outcome="/Pages/Usuario/usuarioCadastro.xhtml?faces-redirect=true">
+						<!-- f param variavel temporaria -->
+						<f:param name="usrCod" value="#{usuario.codigo}"/>
+						<f:param name="usrAcao" value="Excluir"/>
+						
+					</p:button>
+
+					<p:button value="Editar"
+						outcome="/Pages/Usuario/usuarioCadastro.xhtml?faces-redirect=true">
+						<f:param name="usrCod" value="#{usuario.codigo}"/>
+						<f:param name="usrAcao" value="Editar"/>
+					</p:button>
+
+
+				</p:column>
+
+			</p:dataTable>
+		</h:form>
+	</ui:define>
+ </ui:composition>
+ 
+</html>

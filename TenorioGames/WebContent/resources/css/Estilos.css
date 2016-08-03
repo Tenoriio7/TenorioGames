@@ -1,0 +1,5 @@
+@CHARSET "UTF-8";
+/* componentes e sub componentes, trocando font global */
+.ui-widget, .ui-widget .ui-widget {
+font-size: 95%;;
+}

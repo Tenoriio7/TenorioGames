@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+ <ui:composition template="/templates/modeloGeral.xhtml">
+ 		<ui:define name="metadate">
+		<f:metadata>
+			<f:event listener="#{produtoBean.carregarPesquisaFornecedor}" type="preRenderView"/>
+			<f:event listener="#{produtoBean.carregarPesquisaGeneros}" type="preRenderView"/>
+			<f:event listener="#{produtoBean.carregarCadastro}" type="preRenderView"/>
+			<f:viewParam name="proAcao" value="#{produtoBean.acao}"></f:viewParam>
+			<f:viewParam name="proCod" value="#{produtoBean.codigo}"></f:viewParam>	
+		</f:metadata>
+	</ui:define> 
+	<ui:define name="conteudo">
+		<!-- para inserir toolbar deve se ter o facet -->
+		<p:toolbar>
+				<f:facet name="left">
+				<h:outputText value="Produto Cadastro"></h:outputText>
+				</f:facet>
+		</p:toolbar>
+		<h:form>
+		<div align="left">
+		<br />
+			<h:panelGrid columns="2">
+			<h:outputLabel value="Código:"></h:outputLabel>
+			<h:inputText maxlength="20" size="10" disabled="true" value="#{produtoBean.produtoCadastro.codigo}" />
+			
+			<h:outputLabel value="Descricao"></h:outputLabel>
+			<h:inputText maxlength="50" size="30" value="#{produtoBean.produtoCadastro.descricao}"
+			disabled="#{produtoBean.acao == 'Excluir'}"/>
+			
+			
+			
+			<h:outputLabel value="Preço"></h:outputLabel>
+			<h:inputText maxlength="50" size="20" value="#{produtoBean.produtoCadastro.preco}"
+			disabled="#{produtoBean.acao== 'Excluir'}">
+			<f:validateBean />
+			</h:inputText>
+			<h:outputLabel value="Quatidade no estoque:" />
+			<h:inputText maxlength="14" size="14" value="#{produtoBean.produtoCadastro.quantidade}"
+			disabled="#{produtoBean.acao== 'Excluir'}"/>
+			
+			<h:outputLabel value="Peso em  Kg:" />
+			<h:inputText maxlength="4" size="14" value="#{produtoBean.produtoCadastro.peso}"
+			disabled="#{produtoBean.acao== 'Excluir'}"/>
+						
+		
+			</h:panelGrid>
+			
+			<br /><br />
+			<h:outputLabel value="Seleciona a Plataforma:" />
+			<h:selectOneMenu value="#{produtoBean.produtoCadastro.plataforma}"
+			disabled="#{produtoBean.acao == 'Excluir'}">
+				<f:selectItem itemLabel="PS3" itemValue="PS3"/>				
+				<f:selectItem itemLabel="PS4" itemValue="PS4"/>
+				<f:selectItem itemLabel="Xbox360" itemValue="Xbox360"/>
+				<f:selectItem itemLabel="XboxOne" itemValue="XboxooNE"/>
+			</h:selectOneMenu>
+			<br /><br />
+			<h:outputLabel value="Seleciona o setor:" />
+			<h:selectOneMenu value="#{produtoBean.produtoCadastro.setor}"
+			disabled="#{produtoBean.acao == 'Excluir'}">
+				<f:selectItem itemLabel="Console" itemValue="Console"/>				
+				<f:selectItem itemLabel="Jogos" itemValue="Jogos"/>
+				<f:selectItem itemLabel="Acessorios" itemValue="Acessorios"/>
+			</h:selectOneMenu>
+			<br /><br />
+			
+
+			<h:panelGrid columns="2">
+			<h:outputLabel value="Fornecedor"></h:outputLabel>
+			<p:selectOneMenu 
+			value="#{produtoBean.produtoCadastro.fornecedor.codigo}"
+			disabled="#{produtoBean.acao== 'Excluir'}">
+				<f:selectItems value="#{produtoBean.listaFornecedores}" var="fornecedor" 
+				itemLabel="#{fornecedor.nomeFantasia}" itemValue="#{fornecedor.codigo}"/>
+			<f:validateBean />
+			</p:selectOneMenu>
+			
+			<h:outputLabel value="Genero"></h:outputLabel>
+			<p:selectOneMenu value="#{produtoBean.produtoCadastro.genero.codigo}"
+			
+			disabled="#{produtoBean.acao== 'Excluir'}">
+				<f:selectItems value="#{produtoBean.listaGeneros}" var="genero" 
+				itemLabel="#{genero.descricao}" itemValue="#{genero.codigo}"/>
+			<f:validateBean />
+			</p:selectOneMenu>
+			</h:panelGrid>
+			
+			
+						
+			<h:panelGrid columns="6">
+			<p:commandButton value="Novo" actionListener="#{produtoBean.novo}" 
+			 action="/Pages/Produto/produtoCadastro.xhtml?faces-redirect=true"
+			 rendered="#{produtoBean.acao != 'Excluir' and produtoBean.acao != 'Editar'}"/> 
+			<!-- propriedade update serve para informar quem será atualizadovia ajax (id  do growl :msgglobal em template-->
+			<p:commandButton value="Salvar" actionListener="#{produtoBean.salvar}" update=":msgGlobal"
+			rendered="#{produtoBean.acao != 'Excluir' and produtoBean.acao != 'Editar'}"/> 
+			<p:commandButton value="Excluir" actionListener="#{produtoBean.excluir}" update=":msgGlobal"
+			rendered="#{produtoBean.acao== 'Excluir'}"/> 
+			
+			<p:commandButton value="Editar" actionListener="#{produtoBean.editar}" update=":msgGlobal"
+			rendered="#{produtoBean.acao == 'Editar'}"/> 
+			<p:commandButton value="Desativar" actionListener="#{produtoBean.manipular}" update=":msgGlobal"
+			rendered="#{produtoBean.produtoCadastro.status == 'Ativo'}"/>
+			<p:commandButton value="Ativar" actionListener="#{produtoBean.manipular}" update=":msgGlobal"
+			rendered="#{produtoBean.produtoCadastro.status == 'Desativado'}"/>
+			
+			<p:commandButton value="Voltar" action="/Pages/Produto/produtoPesquisa.xhtml?faces-redirect=true"/>
+			</h:panelGrid>
+	
+		</div>
+		</h:form>
+	</ui:define>
+ </ui:composition>
+ 
+</html>

@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+ <ui:composition template="/templates/modeloGeral.xhtml">
+	<ui:define name="metadate">
+		<f:metadata>
+			<f:event listener="#{usuarioBean.carregarCadastro}"
+				type="preRenderView" />
+			<f:viewParam name="usrAcao" value="#{usuarioBean.acao}"></f:viewParam>
+			<f:viewParam name="usrCod" value="#{usuarioBean.codigo}"></f:viewParam>
+		</f:metadata>
+	</ui:define>
+	<ui:define name="conteudo">
+		<!-- para inserir toolbar deve se ter o facet -->
+		<p:toolbar>
+				<f:facet name="left">
+				<h:outputText value="Usuário"></h:outputText>
+				</f:facet>
+		</p:toolbar>
+		<h:form>
+			<h:panelGrid columns="2">
+			<h:outputLabel value="Código:"></h:outputLabel>
+			<h:inputText maxlength="20" size="10" readonly="true" value="#{usuarioBean.usuarioCadastro.codigo}"
+			disabled="#{usuarioBean.acao == 'Excluir'}"/>
+			
+			<h:outputLabel value="Nome"></h:outputLabel>
+			<h:inputText maxlength="50" size="30" value="#{usuarioBean.usuarioCadastro.nome}"
+			disabled="#{usuarioBean.acao == 'Excluir'}"/>
+			
+			<h:outputLabel value="Sobrenome"></h:outputLabel>
+			<h:inputText maxlength="50" size="30" value="#{usuarioBean.usuarioCadastro.sobrenome}"
+			disabled="#{usuarioBean.acao == 'Excluir'}"/>
+			
+			<h:outputLabel value="RG"></h:outputLabel>
+			<p:inputMask mask="99.999.999-9" maxlength="14" size="14" value="#{usuarioBean.usuarioCadastro.RG}"
+			disabled="#{usuarioBean.acao == 'Excluir'}"/>
+			
+			<h:outputLabel value="CPF"/>
+			<p:inputMask mask="999.999.999-99" size="20" value="#{usuarioBean.usuarioCadastro.CPF}"
+			disabled="#{usuarioBean.acao == 'Excluir'}">
+			<f:validateBean/>
+			</p:inputMask>
+			
+			<h:outputLabel value="Idade"></h:outputLabel>
+			<h:inputText maxlength="2" size="2" value="#{usuarioBean.usuarioCadastro.idade}"
+			disabled="#{usuarioBean.acao == 'Excluir'}"/>
+						
+			<h:outputLabel value="Rua"></h:outputLabel>
+			<h:inputText maxlength="50" size="30" value="#{usuarioBean.usuarioCadastro.endereco.rua}"
+			disabled="#{usuarioBean.acao == 'Excluir'}"/>
+			
+			
+			<h:outputLabel value="Numero"></h:outputLabel>
+			<h:inputText maxlength="6" size="6" value="#{usuarioBean.usuarioCadastro.endereco.numero}"
+			disabled="#{usuarioBean.acao == 'Excluir'}"/>
+			
+			<h:outputLabel value="Bairro"></h:outputLabel>
+			<h:inputText maxlength="50" size="30" value="#{usuarioBean.usuarioCadastro.endereco.bairro}"
+			disabled="#{usuarioBean.acao == 'Excluir'}"/>
+			
+			<h:outputLabel value="Estado"/>
+			<h:selectOneMenu disabled="#{usuarioBean.acao == 'Excluir'}" value="#{usuarioBean.usuarioCadastro.endereco.estado}">
+				<f:selectItem itemLabel="Acre" itemValue="Acre"/>
+				<f:selectItem itemLabel="Alagoas " itemValue="Alagoas "/>
+				<f:selectItem itemLabel="Amapá" itemValue="Amapá"/>
+				<f:selectItem itemLabel="Amazonas" itemValue="Amazonas"/>
+				<f:selectItem itemLabel="Bahia" itemValue="Bahia"/>
+				<f:selectItem itemLabel="Ceará" itemValue="Ceará"/>
+				<f:selectItem itemLabel="Distrito Federal" itemValue="Distrito Federal"/>
+				<f:selectItem itemLabel="Espírito Santo" itemValue="Espírito Santo"/>
+				<f:selectItem itemLabel="Goiás" itemValue="Goiás"/>
+				<f:selectItem itemLabel="Maranhão" itemValue="Maranhão"/>
+				<f:selectItem itemLabel="Mato Grosso" itemValue="Mato Grosso"/>
+				<f:selectItem itemLabel="Mato Grosso do Sul" itemValue="Mato Grosso do Sul"/>
+				<f:selectItem itemLabel="Minas Gerais " itemValue="Minas Gerais "/>
+				<f:selectItem itemLabel="Pará" itemValue="Pará"/>
+				<f:selectItem itemLabel="Paraíba" itemValue="Paraíba"/>
+				<f:selectItem itemLabel="Paraná" itemValue="Paraná"/>
+				<f:selectItem itemLabel="Pernambuco" itemValue="Pernambuco"/>
+				<f:selectItem itemLabel="Piauí" itemValue="Piauí"/>
+				<f:selectItem itemLabel="Rio de Janeiro" itemValue="Rio de Janeiro"/>
+				<f:selectItem itemLabel="Rio Grande do Norte " itemValue="Rio Grande do Norte "/>
+				<f:selectItem itemLabel="Rio Grande do Sul " itemValue="Rio Grande do Sul "/>
+				<f:selectItem itemLabel="Rondônia" itemValue="Rondônia"/>
+				<f:selectItem itemLabel="Roraima" itemValue="Roraima"/>
+				<f:selectItem itemLabel="Santa Catarina " itemValue="Santa Catarina "/>
+				<f:selectItem itemLabel="São Paulo" itemValue="São Paulo"/>
+				<f:selectItem itemLabel="Sergipe" itemValue="Sergipe"/>
+				<f:selectItem itemLabel="Tocantins" itemValue="Tocantins"/>		
+			</h:selectOneMenu>
+			
+			<h:outputLabel value="Cidade"></h:outputLabel>
+			<h:inputText maxlength="50" size="30" value="#{usuarioBean.usuarioCadastro.endereco.cidade}"
+			disabled="#{usuarioBean.acao == 'Excluir'}"/>
+			
+			<h:outputLabel value="CEP"></h:outputLabel>
+			<h:inputText maxlength="8" size="8" value="#{usuarioBean.usuarioCadastro.endereco.CEP}"
+			disabled="#{usuarioBean.acao == 'Excluir'}"/>
+			
+			<h:outputLabel value="Telefone"></h:outputLabel>
+			<h:inputText maxlength="50" size="30" value="#{usuarioBean.usuarioCadastro.telefone}"
+			disabled="#{usuarioBean.acao == 'Excluir'}"/>
+						
+			<h:outputLabel value="Email"></h:outputLabel>
+			<h:inputText maxlength="50" size="30" value="#{usuarioBean.usuarioCadastro.email}"
+			disabled="#{usuarioBean.acao == 'Excluir'}"/>
+			
+			<h:outputLabel value="Senha"></h:outputLabel>
+			<h:inputSecret maxlength="8" size="10" value="#{usuarioBean.usuarioCadastro.senha}"
+			disabled="#{usuarioBean.acao == 'Excluir'}"/>
+			</h:panelGrid>
+			<h:panelGrid columns="3">
+			<h:outputLabel value="Selecione o sexo"/>
+			<h:selectOneMenu  value="#{usuarioBean.usuarioCadastro.sexo}"
+			disabled="#{usuarioBean.acao == 'Excluir'}">
+			<f:selectItem itemValue="masculino" itemLabel="Masculino"></f:selectItem>
+			<f:selectItem itemValue="feminino" itemLabel="Feminino"></f:selectItem>
+			</h:selectOneMenu>
+			</h:panelGrid>
+			<h:panelGrid columns="2">
+			<h:outputLabel value="Console:"/>
+			<h:selectOneRadio  value="#{usuarioBean.usuarioCadastro.console}"
+			disabled="#{usuarioBean.acao == 'Excluir'}">
+			<f:selectItem itemValue="PS3" itemLabel="Playstation3"></f:selectItem>
+			<f:selectItem itemValue="PS4" itemLabel="Playstation4"></f:selectItem>
+			<f:selectItem itemValue="XBOXONE" itemLabel="XBOX ONE"></f:selectItem>
+			<f:selectItem itemValue="XBOX 360" itemLabel="XBOX 360"></f:selectItem>
+			</h:selectOneRadio>
+			</h:panelGrid>
+
+			<h:panelGrid columns="6">
+			<!-- propriedade update serve para informar quem será atualizadovia ajax (id  do growl :msgglobal em template-->
+			<p:commandButton value="Salvar" actionListener="#{usuarioBean.salvar}" update=":msgGlobal"
+			rendered="#{usuarioBean.acao=='Salvar'}"/> 
+			<p:commandButton value="Excluir" actionListener="#{usuarioBean.excluir}" update=":msgGlobal"
+			rendered="#{usuarioBean.acao=='Excluir'}"/> 
+			
+			<p:commandButton value="Editar" actionListener="#{usuarioBean.editar}" update=":msgGlobal"
+			rendered="#{usuarioBean.acao=='Editar'}"/> 
+			
+			<p:commandButton value="Voltar" action="/Pages/Usuario/usuarioPesquisa.xhtml?faces-redirect=true"/>
+			
+			</h:panelGrid>
+		</h:form>
+	</ui:define>
+ </ui:composition>
+ 
+</html>

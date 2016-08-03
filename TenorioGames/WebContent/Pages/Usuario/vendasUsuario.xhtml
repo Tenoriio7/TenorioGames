@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+<ui:composition template="/templates/modeloGeral.xhtml">
+	<ui:define name="metadate">
+		<f:metadata>
+			<f:event listener="#{gestaoVendaBean.carregarVendasUsuario}"
+				type="preRenderView"></f:event>
+		</f:metadata>
+	</ui:define>
+
+	<ui:define name="conteudo">
+		<p:toolbar>
+			<f:facet name="left">
+				<h:outputLabel value="Vendas Abertas" />
+			</f:facet>
+		</p:toolbar>
+		<br />
+
+		<p:dataTable emptyMessage="Nenhum Registro Encontrado."
+			value="#{gestaoVendaBean.listaVendas}"
+			filteredValue="#{gestaoVendaBean.listaVendas}" var="venda"
+			paginator="true">
+			<p:column headerText="Codigo">
+				<h:outputText value="#{venda.codigo}" />
+			</p:column>
+			<p:column headerText="Valor">
+				<h:outputText value="#{venda.valor}" />
+			</p:column>
+
+			<p:column headerText="Data">
+				<h:outputText value="#{venda.horario}">
+					<f:convertDateTime pattern="dd/MM/yyyy"
+						timeZone="America/Sao_Paulo" />
+				</h:outputText>
+
+			</p:column>
+
+			<p:column headerText="Status">
+				<h:outputText value="#{venda.status}" />
+			</p:column>
+
+
+			<p:column headerText="Opções">
+				<p:button value="Visualizar"
+					outcome="/Pages/Usuario/vendasVisualizar.xhtml?faces-redirect=true">
+					<f:param name="venCod" value="#{venda.codigo}" />
+
+				</p:button>
+				<p:button value="Ver Itens"
+					outcome="/Pages/Usuario/verItensUsuario.xhtml?faces-redirect=true">
+					<f:param name="venCod" value="#{venda.codigo}" />
+					<f:param name="venStatus" value="#{venda.status}" />
+				</p:button>
+			</p:column>
+
+		</p:dataTable>
+
+
+	</ui:define>
+</ui:composition>
+
+</html>

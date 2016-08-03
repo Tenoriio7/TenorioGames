@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+ <ui:composition template="/templates/modeloGeral.xhtml">
+	<ui:define name="conteudo">
+		<!-- para inserir toolbar deve se ter o facet -->
+		<p:toolbar>
+				<f:facet name="left">
+				<h:outputText value="Usuário"></h:outputText>
+				</f:facet>
+		</p:toolbar>
+		<h:form>
+			<h:panelGrid columns="2">
+			<h:outputLabel value="Código:"></h:outputLabel>
+			<h:inputText maxlength="20" size="10" readonly="true" value="#{usuarioBean.usuario.codigo}"/>
+			
+			<h:outputLabel value="Nome"></h:outputLabel>
+			<h:inputText maxlength="50" size="30" value="#{usuarioBean.usuario.nome}"/>
+			
+			<h:outputLabel value="Sobrenome"></h:outputLabel>
+			<h:inputText maxlength="50" size="30" value="#{usuarioBean.usuario.sobrenome}"/>
+			
+			<h:outputLabel value="RG"></h:outputLabel>
+			<h:inputText maxlength="14" size="14" value="#{usuarioBean.usuarioCadastro}"/>
+			
+			<h:outputLabel value="CPF"></h:outputLabel>
+			<h:inputText maxlength="14" size="14" value="#{usu}"/>
+			
+			<h:outputLabel value="Idade"></h:outputLabel>
+			<h:inputText maxlength="2" size="2" value="#{usuarioBean.usuarioCadastro.}"/>
+			
+			<p:selectOneMenu label="Selecione seu console." value="#{fornecedorBean.fornecedorCadastro.}">
+				<f:selectItem itemLabel="Nenhum" value="Nenhum"/>
+				<f:selectItem itemLabel="PS4" value="PS4"/>
+				<f:selectItem itemLabel="PS3" value="PS3"/>
+				<f:selectItem itemLabel="XBOX ONE" value="XBOXONE"/>
+				<f:selectItem itemLabel="XBO 360" value="XBOX360"/>				
+				
+			</p:selectOneMenu>
+			
+			<h:outputLabel value="Rua"></h:outputLabel>
+			<h:inputText maxlength="50" size="30" value="#{enderecoBean.endereco.rua}"/>
+			
+			
+			<h:outputLabel value="Numero"></h:outputLabel>
+			<h:inputText maxlength="6" size="6" value="#{enderecoBean.endereco.numero}"/>
+			
+			<h:outputLabel value="Bairro"></h:outputLabel>
+			<h:inputText maxlength="50" size="30" value="#{enderecoBean.endereco.bairro}"/>
+			
+			<h:outputLabel value="Estado"></h:outputLabel>
+			<h:inputText maxlength="2" size="2" value="#{enderecoBean.endereco.estado}"/>
+			
+			<h:outputLabel value="Cidade"></h:outputLabel>
+			<h:inputText maxlength="50" size="30" value="#{enderecoBean.endereco.cidade}"/>
+			
+			<h:outputLabel value="CEP"></h:outputLabel>
+			<h:inputText maxlength="8" size="8" value="#{enderecoBean.endereco.CEP}"/>
+			
+			<h:outputLabel value="Login"></h:outputLabel>
+			<h:inputText maxlength="50" size="30" value="#{loginBean.login.login}"/>
+			
+			<h:outputLabel value="Email"></h:outputLabel>
+			<h:inputText maxlength="50" size="30" value="#{loginBean.login.email}"/>
+			
+			<h:outputLabel value="Senha"></h:outputLabel>
+			<h:inputSecret maxlength="50" size="30" value="#{loginBean.login.senha}"/>
+			</h:panelGrid>
+
+			<h:panelGrid columns="3">
+				<h:outputLabel value="Tipo de usuario:" />
+				<h:selectOneRadio value="#{usuarioBean.usuario.tipo_Usuario}">
+					<f:selectItem itemValue="2" itemLabel="Comum"></f:selectItem>
+					<f:selectItem itemValue="1" itemLabel="Administrador"></f:selectItem>
+				</h:selectOneRadio>
+			</h:panelGrid>
+
+
+			<h:panelGrid columns="3">
+			<p:commandButton value="Limpar" action="/Pages/usuarioCadastro.xhtml?faces-redirect=true"></p:commandButton>
+			<p:commandButton value="Salvar" actionListener="#{usuarioBean.salvar}" action="#{enderecoBean.salvar}" update=":msgGlobal"></p:commandButton>
+			<p:commandButton value="Voltar" action="/Pages/usuarioPesquisa.xhtml?faces-redirect=true">
+			</p:commandButton>
+			</h:panelGrid>
+		</h:form>
+	</ui:define>
+ </ui:composition>
+ 
+</html>

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+<ui:composition template="/templates/modeloGeral.xhtml">
+
+
+	<ui:define name="conteudo">
+		<p:toolbar>
+			<f:facet name="left">
+				
+				<h:outputLabel value="Buscar venda aberta "/>
+				<h:inputText maxlength="20"/>
+				<h:button value="ok"/>
+			</f:facet>
+		</p:toolbar><br/>
+		<h:panelGrid columns="3">
+		
+			<h:outputLabel value="Número pedido" />
+			<h:inputText value="1221" />
+			
+			<br/>
+		</h:panelGrid>
+		<h:panelGrid columns="2">
+		<h:outputText value="Produto:" />
+			<h:outputText value="Fifa 16" />
+			<h:outputText value="Valor Total: " />
+			<h:outputText value="R$ 20,00"/>
+			<h:outputText value="CEP: 08567450" />
+			<br></br>
+			<h:outputText value=" Logradouro: Avenida A  N: 210" />
+			
+		</h:panelGrid>
+		<br/>
+		<h:button value="Alterar"/>
+	
+
+	</ui:define>
+</ui:composition>
+
+</html>

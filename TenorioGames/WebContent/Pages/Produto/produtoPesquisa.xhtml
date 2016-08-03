@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+<ui:composition template="/templates/modeloGeral.xhtml">
+	<ui:define name="metadate">
+		<f:metadata>
+			<f:event listener="#{produtoBean.carregarPesquisa}"
+				type="preRenderView"></f:event>
+		</f:metadata>
+	</ui:define>
+
+	<ui:define name="conteudo">
+		<h:form>
+			<!-- columns="4"  dois por linha no painelGrid -->
+			<p:toolbar>
+				<f:facet name="left">
+					<h:outputText value="Produto"></h:outputText>
+				</f:facet>
+			</p:toolbar>
+
+
+			<!--  value  todos / filter  somente  filtrados  //
+			 var aponta o fabricante  corrente(cursor) 
+			 footer rodapé-->
+
+
+			<p:dataTable emptyMessage="Nenhum Registro Encontrado."
+				value="#{produtoBean.listaProdutos}" var="produto" paginator="true"
+				id="tblprodutos">
+				<f:facet name="footer">
+					<p:button value="Novo"
+						outcome="/Pages/Produto/produtoCadastro.xhtml?faces-redirect=true">
+						<f:param name="proAcao" value="Salvar"/>
+					</p:button>
+				</f:facet>
+
+				<f:facet name="header">
+					<h:commandLink>
+						<p:graphicImage name="excel.jpg" width="24"  library="images"/>
+						<p:dataExporter type="xls" target="tblprodutos" fileName="produtos" />
+					</h:commandLink>
+
+					<h:commandLink>
+						<p:graphicImage name="pdf.jpg" width="24"  library="images"/>
+						<p:dataExporter type="pdf" target="tblprodutos" fileName="produtos" encoding="ISO-8859-1" />
+					</h:commandLink>
+
+					
+				</f:facet>
+
+				<!-- filterBy="" filtrar  sortBy="" ordenar -->
+				<p:column headerText="Codigo">
+					<h:outputText value="#{produto.codigo}"></h:outputText>
+				</p:column>
+				<p:column headerText="Descricao" filterBy="#{produto.descricao}"
+					sortBy="#{produto.descricao}">
+					<h:outputText value="#{produto.descricao}"></h:outputText>
+				</p:column>
+				<p:column headerText="Preço" filterBy="#{produto.preco}"
+					sortBy="#{produto.preco}">
+					<h:outputText value="#{produto.preco}"></h:outputText>
+				</p:column>
+
+				<p:column headerText="Opções">
+					<p:button value="Excluir"
+						outcome="/Pages/Produto/produtoCadastro.xhtml?faces-redirect=true">
+						<!-- f param variavel temporaria -->
+						<f:param name="proCod" value="#{produto.codigo}"/>
+						<f:param name="proAcao" value="Excluir"/>
+					</p:button>
+
+					<p:button value="Editar"
+						outcome="/Pages/Produto/produtoCadastro.xhtml?faces-redirect=true">
+						<f:param name="proCod" value="#{produto.codigo}"/>
+						<f:param name="proAcao" value="Editar"/>
+						
+					</p:button>
+
+
+				</p:column>
+
+			</p:dataTable>
+		</h:form>
+	</ui:define>
+</ui:composition>
+
+</html>

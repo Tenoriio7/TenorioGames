@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+<ui:composition template="/templates/modeloGeral.xhtml">
+	<ui:define name="metadate">
+		<f:metadata>
+			<f:viewParam name="VenCod" value="#{devolucaoBean.codigoVenda}" />
+			<f:viewParam name="ProdCod" value="#{devolucaoBean.codigoProduto}" />
+			<f:viewParam name="Acao" value="#{devolucaoBean.acao}" />
+			<f:viewParam name="IteValor" value="#{devolucaoBean.valor}" />
+			<f:viewParam name="devSta" value="#{devolucaoBean.status}" />
+			<f:event listener="#{devolucaoBean.carregarCadastro}" type="preRenderView"/>
+		</f:metadata>
+	</ui:define>
+	<ui:define name="conteudo">
+		<p:toolbar>
+			<f:facet name="left">
+				<h:outputText value="Criar Devolucao"></h:outputText>
+			</f:facet>
+		</p:toolbar>
+
+		<h:form id="frmDevCad">
+
+			<h:panelGrid columns="2" id="pnlDevCadDados">
+
+				<h:outputLabel value="Codigo"></h:outputLabel>
+				<h:inputText maxlength="50" size="30"
+					value="#{devolucaoBean.devolucao.codigo}" />
+				
+				<p:outputLabel value="Codigo do produto :" />
+				<p:outputLabel disabled="true"
+					value="#{devolucaoBean.codigoProduto}" />
+				<p:outputLabel value="Codigo da Venda :" />
+				<p:outputLabel disabled="true" value="#{devolucaoBean.codigoVenda}" />
+				
+				<p:outputLabel value="Valor da Devolução :"
+				/>
+				<p:outputLabel disabled="true" value="#{devolucaoBean.valor}" 
+				/>
+				
+				<p:outputLabel value="Devolução Status :"
+				/>
+				<p:outputLabel disabled="true" value="#{devolucaoBean.status}" 
+				/>
+				
+			</h:panelGrid>
+		</h:form>
+
+
+	</ui:define>
+
+
+</ui:composition>
+</html>
